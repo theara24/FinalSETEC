@@ -122,11 +122,6 @@
                 <i class="fas fa-table mr-2"></i> Manage Books
               </a>
             </li>
-            <li>
-              <a class="nav-link flex items-center p-3 rounded-lg" href="#">
-                <i class="fas fa-cog mr-2"></i> Settings
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
@@ -186,25 +181,25 @@
     <script>
       // Load dashboard metrics and chart
       function loadDashboardMetrics() {
-        let storedData = localStorage.getItem("book_list");
+        let storedData = localStorage.getItem('book_list');
         let books = [];
         try {
           books = storedData ? JSON.parse(storedData) : [];
           if (!Array.isArray(books)) books = [];
         } catch (error) {
-          console.error("Error parsing book_list from localStorage", error);
+          console.error('Error parsing book_list from localStorage', error);
           books = [];
         }
 
         // Update metrics
-        $("#totalBooks").text(books.length || "No books available");
+        $('#totalBooks').text(books.length || 'No books available');
         const genres = [...new Set(books.map((book) => book.genre))];
-        $("#totalGenres").text(genres.length || "No genres available");
+        $('#totalGenres').text(genres.length || 'No genres available');
 
-        const recentBooksList = $("#recentBooks");
+        const recentBooksList = $('#recentBooks');
         recentBooksList.empty();
         if (books.length === 0) {
-          recentBooksList.append("<li>None</li>");
+          recentBooksList.append('<li>None</li>');
         } else {
           books
             .slice(-3)
@@ -226,32 +221,32 @@
             {
               data: Object.values(genreCounts),
               backgroundColor: [
-                "#cbb89d",
-                "#806044",
-                "#b8a58c",
-                "#6d5238",
-                "#d3c7a6",
-                "#a68a64",
+                '#cbb89d',
+                '#806044',
+                '#b8a58c',
+                '#6d5238',
+                '#d3c7a6',
+                '#a68a64',
               ],
-              borderColor: "#ffffff",
+              borderColor: '#ffffff',
               borderWidth: 2,
             },
           ],
         };
 
         // Render pie chart
-        const ctx = document.getElementById("genreChart").getContext("2d");
+        const ctx = document.getElementById('genreChart').getContext('2d');
         new Chart(ctx, {
-          type: "pie",
+          type: 'pie',
           data: chartData,
           options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
               legend: {
-                position: "bottom",
+                position: 'bottom',
                 labels: {
-                  color: "#4b5563",
+                  color: '#4b5563',
                   font: {
                     size: 12,
                   },
@@ -259,8 +254,8 @@
               },
               title: {
                 display: true,
-                text: "Book Distribution by Genre",
-                color: "#4b5563",
+                text: 'Book Distribution by Genre',
+                color: '#4b5563',
                 font: {
                   size: 14,
                 },
@@ -271,16 +266,16 @@
       }
 
       // Logout functionality
-      $("#logoutBtn").on("click", function () {
-        localStorage.removeItem("userRole");
-        window.location.href = "register.html";
+      $('#logoutBtn').on('click', function () {
+        localStorage.removeItem('userRole');
+        window.location.href = 'register.html';
       });
 
       // Check admin access
       $(document).ready(function () {
-        const userRole = localStorage.getItem("userRole");
-        if (userRole !== "admin") {
-          window.location.href = "register.html?role=admin";
+        const userRole = localStorage.getItem('userRole');
+        if (userRole !== 'admin') {
+          window.location.href = 'register.html?role=admin';
         } else {
           loadDashboardMetrics();
         }
