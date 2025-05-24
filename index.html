@@ -150,8 +150,16 @@
         animation: fadeIn 0.3s ease-out forwards;
       }
       .card-img-top {
-        height: 200px;
+        width: 100%;
+        height: 220px;
         object-fit: cover;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        background: #f3f3f3;
+        transition: transform 0.2s;
+      }
+      .card-img-top:hover {
+        transform: scale(1.03);
       }
     </style>
   </head>
@@ -655,27 +663,36 @@
         filteredBooks.forEach((book, index) => {
           const bookCard = document.createElement('div');
           bookCard.className =
-            'book-card bg-white rounded-lg shadow-md overflow-hidden animate-fadeIn';
+            'book-card bg-white rounded-2xl shadow-lg overflow-hidden animate-fadeIn flex flex-col transition-transform duration-200 hover:scale-105 hover:shadow-2xl border border-gray-100';
+
           bookCard.innerHTML = `
-            <div class="h-full flex flex-col">
-              <img src="${book.image}" class="card-img-top w-full" alt="${
-            book.title
-          }">
-              <div class="p-4 flex-grow flex flex-col">
-                <h3 class="font-bold text-lg mb-1 text-gray-800 truncate">${
-                  book.title
-                }</h3>
-                <p class="text-sm text-gray-600 mb-1">by ${book.author}</p>
-                <p class="text-sm text-secondary mb-3">${book.genre}</p>
-                <p class="text-gray-800 font-bold text-lg mb-4">$${parseFloat(
-                  book.price
-                ).toFixed(2)}</p>
-                <button onclick="addToCart(${index})" class="mt-auto bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          `;
+    <div class="relative">
+      <img src="${
+        book.image
+      }" class="card-img-top w-full h-56 object-cover" alt="${book.title}">
+      <span class="absolute top-3 left-3 bg-secondary text-white text-xs px-3 py-1 rounded-full shadow">${
+        book.genre
+      }</span>
+    </div>
+    <div class="p-5 flex flex-col flex-grow">
+      <h3 class="font-bold text-lg mb-1 text-gray-800 truncate" title="${
+        book.title
+      }">${book.title}</h3>
+      <p class="text-sm text-gray-500 mb-1">by <span class="font-medium">${
+        book.author
+      }</span></p>
+      <div class="flex items-center justify-between mt-2 mb-4">
+        <span class="text-xl font-bold text-primary">$${parseFloat(
+          book.price
+        ).toFixed(2)}</span>
+        <span class="text-xs text-gray-400">ISBN: ${book.isbn || 'N/A'}</span>
+      </div>
+      <button onclick="addToCart(${index})"
+        class="mt-auto bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg font-semibold shadow transition duration-150 flex items-center justify-center gap-2">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+      </button>
+    </div>
+  `;
           bookList.appendChild(bookCard);
         });
 
